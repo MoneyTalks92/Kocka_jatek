@@ -1,6 +1,6 @@
 // DOM manipuláció, javascriptel módosítjuk a css-t és a html-t
 
-let scores, roundScore, activePlayer; previousDices;
+let scores, roundScore, activePlayer; previousDices; finalScore;
 
 function init() {
   // a két játékos pontszáma egy két elemű tömbben lesz tárolva
@@ -15,6 +15,13 @@ function init() {
 
   // játékosok előző pontszámai
   previousDices = [0, 0];
+
+  // a finalScore értékét beállítjuk a user által megadottra
+  finalScore = document.getElementsByClassName('.final-score')[0].value;
+  // ha nem ad meg értéket a user, akkor 100 lesz a finalScore
+  if (finalScore === null) {
+    finalScore = 100;
+  }
 
   // beállítjuk a kezdő értékeket a UI-on is
 
