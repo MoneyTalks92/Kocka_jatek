@@ -1,6 +1,6 @@
 // DOM manipuláció, javascriptel módosítjuk a css-t és a html-t
 
-let scores, roundScore, activePlayer;
+let scores, roundScore, activePlayer; previousDices;
 
 function init() {
   // a két játékos pontszáma egy két elemű tömbben lesz tárolva
@@ -12,6 +12,9 @@ function init() {
 
   // mindig az első játékos kezd
   activePlayer = 0;
+
+  // játékosok előző pontszámai
+  previousDices = [0, 0];
 
   // beállítjuk a kezdő értékeket a UI-on is
 
@@ -61,6 +64,13 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
     //  ha a játékos 1-est dobott
   } else {
     nextPlayer();
+  }
+  // a játékos minden szerzett pontját elveszti ha 2db 6-ost dob egymás után, következő játékos jön
+  if (previousDices[activePlayer] === 6) {
+    if (dice === 6) {
+      scores[activePlayer] = 0;
+      nextPlayer();
+    }
   }
 });
 
