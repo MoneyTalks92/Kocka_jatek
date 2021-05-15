@@ -21,9 +21,10 @@ function init() {
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
 
-  // a játék kezdetekor a kockát eltüntetjük
+  // a játék kezdetekor a kockákat eltüntetjük
   // inline style-t adunk hozzá az img-hez...
-  document.querySelector('.dice').style.display = 'none';
+  document.querySelector('#dice-1').style.display = 'none';
+  document.querySelector('#dice-2').style.display = 'none';
   // a gombokat megjelenítjük
   document.querySelector('.btn-roll').style.display = 'block';
   document.querySelector('.btn-hold').style.display = 'block';
@@ -48,19 +49,13 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
   let dice = Math.floor(Math.random() * 6) + 1;
   // console.log(dice);
   // 2. Az eredményt megjelenítjük az UI-on
-  let diceDOM = document.querySelector('.dice');
+  let diceDOM = document.querySelectorAll('#dice-1, #dice-2');
   diceDOM.style.display = 'block';
   // string concatenation: szöveg összefűzés
   diceDOM.setAttribute('src', 'dice-' + dice + '.png');
-  // Ha  a játékos 1-est dob, a roundScore értékét veszti, és a következő játékos jön
-  if (dice !== 1) {
-    // A dobott értéket kiszámoljuk, majd megjelenítjük a piros dobozban...
-    roundScore = roundScore + dice;
-
-    document.querySelector('#current-' + activePlayer).textContent = roundScore;
-    //  ha a játékos 1-est dobott
-  } else {
-    nextPlayer();
+  // ha az egyik dobás 1-es lesz, a játékos pontjai nullázódnak
+  if (dice === 1) {
+    scores[activePlayer] = 0;
   }
 });
 
@@ -94,7 +89,8 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
     document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
 
     document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
-    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('#dice-1').style.display = 'none';
+    document.querySelector('#dice-2').style.display = 'none';
     document.querySelector('.btn-roll').style.display = 'none';
     document.querySelector('.btn-hold').style.display = 'none';
   } else {
